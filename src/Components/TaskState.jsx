@@ -43,6 +43,7 @@ const Container = styled(Card)`
   display: flex;
   padding-bottom: 15px;
   margin-bottom: 20px;
+  overflow-y: unset;
 `;
 
 export const Stats = () => {

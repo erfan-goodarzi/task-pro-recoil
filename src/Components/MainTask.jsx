@@ -1,13 +1,32 @@
 import React from 'react'
+import styled from 'styled-components'
 import {Task} from './Task'
 
-export const Tasks = () => {
+const Eg = styled.div`
+height: 0vh;
+
+`
+
+export const MainTask = () => {
     return (
-        <div>
+        <Eg>
             <Task id={0} />
             <Task id={1} />
             <Task id={2} />
             <Task id={3} />
-        </div>
+            <Task id={3} />
+            <Task id={3} />
+            <Task id={3} />
+            <Task id={3} />
+            <Task id={3} />
+            <Task id={3} />
+            <Task id={3} />
+            <Task id={3} />
+            <Task id={3} />
+            <Task id={3} />
+            <Task id={3} />
+            <Task id={3} />
+            <Task id={3} />
+        </Eg>
     )
 }
