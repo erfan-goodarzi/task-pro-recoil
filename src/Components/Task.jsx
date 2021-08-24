@@ -1,5 +1,5 @@
 import React from "react";
-import {  atomFamily, useRecoilValue } from "recoil";
+import { atomFamily, useRecoilState } from "recoil";
 import styled, { css } from "styled-components";
 import Checkimg from "../assets/Checksvg.svg";
 export const TextStyle = css`
@@ -24,8 +24,11 @@ border-radius: 10px;
  
 `;
 const Check = styled.div`
+border-radius: 3px;
+    background: #485d79;
+    box-shadow: 5px 5px 19px #19202b, -5px -5px 19px #3f526b;
  
-border-radius: 25%;
+ 
     width: 20px;
     height: 20px;
     margin: 16px 20px;
@@ -37,14 +40,14 @@ align-items: center;
 justify-content: center;
  
 display: flex;
-  background-color: #fff;
  
 cursor: pointer;
 ${(props) =>
-    props.checked &&
-    css`
-        background-color: transparent;
-    `}
+  props.checked &&
+  css`
+    background-color: transparent;
+    box-shadow: none;
+  `}
  
  
 `;
@@ -94,18 +97,24 @@ transition: 0.1s all ease-in-out;
 `;
 
 export const taskState = atomFamily({
-  key: 'task',
+  key: "task",
   default: {
-      label: '',
-      complete: false,
+    label: "",
+    complete: false,
   },
-})
+});
 export const Task = ({ id }) => {
+  const [{ complete, label }, setTask] = useRecoilState(taskState(id));
 
-  const {complete,label} = useRecoilValue(taskState(id))
- 
   return (
-    <Container >
+    <Container
+      onClick={() => {
+        setTask({
+          label,
+          complete: !complete,
+        });
+      }}
+    >
       <Check checked={complete}>
         <CheckIcon src={Checkimg} style={{ opacity: complete ? 1 : 0 }} />
       </Check>
