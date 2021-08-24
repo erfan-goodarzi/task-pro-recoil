@@ -1,13 +1,11 @@
-import React, { useState } from "react";
-import { useRecoilState } from "recoil";
+import { useState } from "react";
+import { useRecoilValue, useRecoilCallback } from "recoil";
 import styled from "styled-components";
-import { taskState } from "./MainTask";
- 
-
-
+import { tasksState } from "./MainTask";
+import { taskState } from "./Task";
 
 const InsertInput = styled.input`
-  border-radius: 18px;
+  border-radius: 50px;
   background: #2c394b;
   box-shadow: 5px 5px 19px #19202b, -5px -5px 19px #3f526b;
   width: 103%;
@@ -24,16 +22,15 @@ const InsertInput = styled.input`
     -webkit-appearance: none;
   }
   padding: 2px 18px;
-  transition: all 0.2s ease-in-out; 
-  &:hover{
+  transition: all 0.2s ease-in-out;
+  &:hover {
     background: #19202b;
     transition: all 0.2s ease-in-out;
   }
-  &::placeholder{
-      color : #fff;
+  &::placeholder {
+    color: #fff;
   }
 `;
-
 
 const Container = styled.div`
   height: 50px;
@@ -44,8 +41,19 @@ const Container = styled.div`
 `;
 
 export const Input = () => {
-  const [label, setLabel] = useState("");
-  const [Tasks, setTasks] = useRecoilState(taskState);
+  const [label, setLabel] = useState('')
+  const tasks = useRecoilValue(tasksState)
+
+  const insertTask = useRecoilCallback(({set}) => {
+      return (label) => {
+          const newTaskId = tasks.length
+          set(tasksState, [...tasks, newTaskId])
+          set(taskState(newTaskId), {
+              label: label,
+              complete: false,
+          })
+      }
+  })
 
   return (
     <Container>
@@ -56,13 +64,13 @@ export const Input = () => {
         onChange={({ currentTarget }) => {
           setLabel(currentTarget.value);
         }}
-        onKeyUp={({keyCode}) => {
+        onKeyUp={({ keyCode }) => {
           if (keyCode === 13) {
-              setTasks([...Tasks, Tasks.length])
-              setLabel('')
+            insertTask(label);
+            setLabel("");
           }
-      }}
-      /> 
+        }}
+      />
     </Container>
   );
 };
