@@ -1,5 +1,10 @@
 import React, { useState } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { taskState } from "./MainTask";
+ 
+
+
 
 const InsertInput = styled.input`
   border-radius: 18px;
@@ -40,6 +45,7 @@ const Container = styled.div`
 
 export const Input = () => {
   const [label, setLabel] = useState("");
+  const [Tasks, setTasks] = useRecoilState(taskState);
 
   return (
     <Container>
@@ -50,7 +56,13 @@ export const Input = () => {
         onChange={({ currentTarget }) => {
           setLabel(currentTarget.value);
         }}
-      />
+        onKeyUp={({keyCode}) => {
+          if (keyCode === 13) {
+              setTasks([...Tasks, Tasks.length])
+              setLabel('')
+          }
+      }}
+      /> 
     </Container>
   );
 };
