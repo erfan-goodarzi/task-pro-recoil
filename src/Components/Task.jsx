@@ -66,34 +66,21 @@ ${TextStyle}
  
 `;
 const Strikethrough = styled.div`
- 
-position: absolute;
- 
-top: 50%;
- 
-left: -3px;
- 
-right: -3px;
- 
-height: 2px;
- 
-
- 
-border-radius: 2px;
- 
-transform: scaleX(0);
- 
-transform-origin: center left;
- 
-transition: 0.1s all ease-in-out;
- 
-  ${(props) =>
-  props.checked &&
-  css`
-    transform: scaleX(1);
-  `};
- 
-
+  position: absolute;
+    top: 50%;
+    left: -3px;
+    right: -3px;
+    height: 2px;
+    background-color: #fff;
+    border-radius: 2px;
+    transform: scaleX(0);
+    transform-origin: center left;
+    transition: 0.1s all ease-in-out;
+    ${(props) =>
+        props.checked &&
+        css`
+            transform: scaleX(1);
+        `};
 `;
 
 export const taskState = atomFamily({

@@ -1,6 +1,10 @@
 import React from "react";
 import { Card } from "./Card";
 import styled from "styled-components";
+import { selector, useRecoilValue } from "recoil";
+ 
+import { tasksState } from "./MainTask";
+import { taskState } from "./Task";
 
 const StatContainer = styled.div`
   flex: 1;
@@ -46,12 +50,36 @@ const Container = styled(Card)`
   overflow-y: unset;
 `;
 
+const taskCompleteState = selector({
+  key: "taskComplete",
+  get: ({ get }) => {
+    const TaskId = get(tasksState).map(id =>{
+      return get(taskState(id))
+    })
+    return TaskId.filter(task => task.complete).length;
+  },
+});
+
+const taskRemainingState = selector({
+  key: "taskRemaining",
+  get: ({ get }) => {
+    const TaskId = get(tasksState).map(id =>{
+      return get(taskState(id))
+    })
+    return TaskId.filter(task => !task.complete).length;
+  },
+});
+
+
 export const Stats = () => {
+  const TaskComplete = useRecoilValue(taskCompleteState);
+  const TaskRemaining = useRecoilValue(taskRemainingState);
+
   return (
     <Container>
-      <Stat label="Tasks Complete" value="1" />
+      <Stat label="Tasks Complete" value={TaskComplete} />
       <Divider />
-      <Stat label="Tasks Remaining" value="3" />
+      <Stat label="Tasks Remaining" value={TaskRemaining} />
     </Container>
   );
 };
