@@ -7,7 +7,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 https://user-images.githubusercontent.com/63591256/130965863-48988ec6-db77-4f45-ac89-d89b05987d87.mp4
 
-
+Online demo: https://elastic-minsky-56ac4b.netlify.app/
 
 ## Available Scripts
 
